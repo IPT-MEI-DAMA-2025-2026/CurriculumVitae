@@ -1,5 +1,6 @@
 package pt.ipt.dama2026.mycurriculumvitae
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -9,6 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.view.inputmethod.InputMethodManager
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         // se o utilizador 'clicou' no botão, avalia se se pode mostrar o Currículo
         findViewById<Button>(R.id.button).setOnClickListener {
-            mostraCurriculum()
+            mostraCurriculum(it)
         }
 
 
@@ -34,13 +37,14 @@ class MainActivity : AppCompatActivity() {
      * Mostra o Currículo do utilizador,
      * se o utilizador cumprir com as condições para apresentação
      */
-    fun mostraCurriculum() {
+    fun mostraCurriculum(view: View) {
         /*
          * Condições para apresentar o Currículo:
          * se (foi escrita a palavra SIM na textbox), mostra Currículo
          *    torna visível o Currículo
          *    torna invisível a textbox
          *    torna invisível o botão
+         *    esconder o teclado
          * senão, nada faz
          */
 
@@ -55,6 +59,10 @@ class MainActivity : AppCompatActivity() {
             txt.visibility=View.GONE
             // esconder o botão
             findViewById<Button>(R.id.button).visibility=View.GONE
+
+            // esconder o teclado
+            val imm=getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken,0)
         }
 
 
