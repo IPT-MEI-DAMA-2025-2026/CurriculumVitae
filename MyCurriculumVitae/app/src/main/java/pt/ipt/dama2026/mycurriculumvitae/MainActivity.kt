@@ -1,12 +1,17 @@
 package pt.ipt.dama2026.mycurriculumvitae
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -16,5 +21,43 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // se o utilizador 'clicou' no botão, avalia se se pode mostrar o Currículo
+        findViewById<Button>(R.id.button).setOnClickListener {
+            mostraCurriculum()
+        }
+
+
+    }
+
+    /**
+     * Mostra o Currículo do utilizador,
+     * se o utilizador cumprir com as condições para apresentação
+     */
+    fun mostraCurriculum() {
+        /*
+         * Condições para apresentar o Currículo:
+         * se (foi escrita a palavra SIM na textbox), mostra Currículo
+         *    torna visível o Currículo
+         *    torna invisível a textbox
+         *    torna invisível o botão
+         * senão, nada faz
+         */
+
+        // criar 'ponteiro' para a textbox
+        val txt=findViewById<EditText>(R.id.editTextText)
+
+        // avaliar o conteúdo
+        if (txt.text.toString().uppercase().equals("SIM")) {
+            // mostrar Currículo
+            findViewById<TextView>(R.id.curriculum).visibility= View.VISIBLE
+            // esconder textbox
+            txt.visibility=View.GONE
+            // esconder o botão
+            findViewById<Button>(R.id.button).visibility=View.GONE
+        }
+
+
+
     }
 }
